@@ -5,6 +5,6 @@ import 'package:flutter_map_practice/src/controllers/location_controller.dart';
 class Base {
   Base._();
   static final configController = ConfigController();
-  static final himeController = HomePageController();
+  static final homePageController = HomePageController();
   static final locationController = LocationController();
 }
