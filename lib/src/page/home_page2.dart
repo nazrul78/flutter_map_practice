@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_practice/src/helpers/k_log.dart';
+import 'package:flutter_map_practice/src/models/polyline_info_model.dart';
 import 'package:latlong2/latlong.dart';
 
-typedef HitValue = ({String title, String subtitle});
+//typedef HitValue = ({String title, String subtitle});
 
 class HomePage2 extends StatefulWidget {
   @override
@@ -12,23 +14,28 @@ class HomePage2 extends StatefulWidget {
 class _HomePage2State extends State<HomePage2> {
   final kMapController = MapController();
   // Create a LayerHitNotifier to track the hit value when a polyline is tapped
-  final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
+  final LayerHitNotifier<PolylineInfoModel> _hitNotifier = ValueNotifier(null);
 
   // Create a list of polylines
-  final List<Polyline<HitValue>> _polylines = [
+  final List<Polyline<PolylineInfoModel>> _polylines = [
     Polyline(
-      points: const [
-        LatLng(51.5, -0.09),
-        LatLng(53.3498, -6.2603),
-        LatLng(48.8566, 2.3522),
-      ],
-      strokeWidth: 8,
-      color: Colors.red,
-      hitValue: (
-        title: 'Red Line',
-        subtitle: 'This is the red line! Nazrul',
-      ),
-    ),
+        points: const [
+          LatLng(51.5, -0.09),
+          LatLng(53.3498, -6.2603),
+          LatLng(48.8566, 2.3522),
+        ],
+        strokeWidth: 8,
+        color: Colors.red,
+        hitValue: PolylineInfoModel(
+          id: '1',
+          name: 'Nazrul Islam',
+          address: 'Narayanganj',
+        )
+        // hitValue: (
+        //   title: 'Red Line',
+        //   subtitle: 'This is the red line! Nazrul',
+        // ),
+        ),
     Polyline(
       points: const [
         LatLng(40.0, -3.0),
@@ -37,17 +44,22 @@ class _HomePage2State extends State<HomePage2> {
       ],
       strokeWidth: 8,
       color: Colors.blue,
-      hitValue: (
-        title: 'Blue Line',
-        subtitle: 'This is the blue line! Monir',
+      hitValue: PolylineInfoModel(
+        id: '2',
+        name: 'Monir Khan',
+        address: 'Khustia',
       ),
+      // hitValue: (
+      //   title: 'Blue Line',
+      //   subtitle: 'This is the blue line! Monir',
+      // ),
     ),
   ];
 
   void _handleTap() {
     // Check if any polyline was hit
     if (_hitNotifier.value == null || _hitNotifier.value!.hitValues.isEmpty) {
-      print("No polyline hit detected.");
+      klog("No polyline hit detected.");
       return;
     }
 
@@ -62,8 +74,8 @@ class _HomePage2State extends State<HomePage2> {
           mainAxisSize: MainAxisSize.min,
           children: tappedLines
               .map((line) => ListTile(
-                    title: Text(line.title),
-                    subtitle: Text(line.subtitle),
+                    title: Text(line.id!),
+                    subtitle: Text('${line.name!} & ${line.address!}'),
                   ))
               .toList(),
         ),
