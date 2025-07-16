@@ -231,10 +231,6 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     log('Tapped');
                     log('${hitNotifier.value!}');
-                    log('${hitNotifier.value!}');
-                    log('${hitNotifier.value!}');
-                    log('${hitNotifier.value!}');
-                    log('${hitNotifier.value!}');
                   },
                   // onLongPress: () => _openTouchedLinesModal(
                   //   'Long pressed',
